@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 //fwd
 namespace scenes
@@ -29,7 +29,7 @@ namespace components
 
 	struct FadeOut : public Fade
 	{
-		// ‘JˆÚæƒV[ƒ“–¼
+		// é·ç§»å…ˆã‚·ãƒ¼ãƒ³å
 		String to;
 
 		FadeOut(StringView to, const Duration& time) : to(to), Fade(time) {}

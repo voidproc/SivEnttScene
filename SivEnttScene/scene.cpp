@@ -1,13 +1,13 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "scene.h"
 
 namespace scene
 {
 	namespace
 	{
-		// ƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚ğ to ‚ÉØ‚è‘Ö‚¦‚é
-		// ‘JˆÚŒ³E‘JˆÚæ‚ÌonNavigate()‚ğŒÄ‚Ô
-		// ƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+		// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã‚’ to ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+		// é·ç§»å…ƒãƒ»é·ç§»å…ˆã®onNavigate()ã‚’å‘¼ã¶
+		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚’é–‹å§‹ã™ã‚‹
 		void navigateTo(entt::registry& registry, StringView from, StringView to, const Duration& fade)
 		{
 			registry
@@ -35,13 +35,13 @@ namespace scene
 	{
 		auto viewActive = registry.view<components::Scene, components::ActiveScene>();
 
-		// ƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚ğ’T‚µ‚ÄƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
+		// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã‚’æ¢ã—ã¦ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚’é–‹å§‹ã™ã‚‹
 		viewActive.each([&](auto entity, auto& /*scene*/, const auto& /*active*/)
 			{
 				registry.assign<components::FadeOut>(entity, sceneName, fade);
 			});
 
-		// ƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚ª‚È‚¢ê‡‚ÍƒV[ƒ“‘JˆÚ‚µ‚ÄƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+		// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ãŒãªã„å ´åˆã¯ã‚·ãƒ¼ãƒ³é·ç§»ã—ã¦ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚’é–‹å§‹ã™ã‚‹
 		if (viewActive.empty())
 		{
 			navigateTo(registry, U"", sceneName, fade);
@@ -50,7 +50,7 @@ namespace scene
 
 	void update(entt::registry& registry)
 	{
-		// ƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚ğXV
+		// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã‚’æ›´æ–°
 		registry
 			.view<components::Scene, components::ActiveScene>()
 			.each([&](auto& scene, const auto& /*active*/)
@@ -58,14 +58,14 @@ namespace scene
 					scene.scene->update();
 				});
 
-		// ƒtƒF[ƒhƒAƒEƒg’†
+		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆä¸­
 		registry
 			.view<components::Scene, components::FadeOut, components::ActiveScene>()
 			.each([&](auto entity, auto& scene, auto& fade, const auto& /*active*/)
 				{
 					scene.scene->fadeOut(fade.timer.progress0_1());
 
-					// ƒtƒF[ƒhƒAƒEƒg‚ªI‚í‚Á‚½H
+					// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆãŒçµ‚ã‚ã£ãŸï¼Ÿ
 					if (fade.timer.reachedZero())
 					{
 						navigateTo(registry, scene.name, fade.to, fade.time);
@@ -73,14 +73,14 @@ namespace scene
 					}
 				});
 
-		// ƒtƒF[ƒhƒCƒ“’†
+		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ä¸­
 		registry
 			.view<components::Scene, components::FadeIn>()
 			.each([&](auto entity, auto& scene, auto& fade)
 				{
 					scene.scene->fadeIn(fade.timer.progress0_1());
 
-					// ƒtƒF[ƒhƒCƒ“‚ªI‚í‚Á‚½H
+					// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ãŒçµ‚ã‚ã£ãŸï¼Ÿ
 					if (fade.timer.reachedZero())
 					{
 						registry.remove<components::FadeIn>(entity);

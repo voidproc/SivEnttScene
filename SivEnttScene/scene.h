@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "component.h"
 
@@ -8,26 +8,26 @@ namespace scenes
 	{
 		virtual ~IScene() = default;
 
-		// ƒV[ƒ“‚ğXV‚·‚é
-		// –ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚é
+		// ã‚·ãƒ¼ãƒ³ã‚’æ›´æ–°ã™ã‚‹
+		// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹
 		virtual void update() = 0;
 
-		// ƒV[ƒ“‘JˆÚ‚ÌƒtƒF[ƒhƒCƒ“ˆ—
+		// ã‚·ãƒ¼ãƒ³é·ç§»æ™‚ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³å‡¦ç†
 		virtual void fadeIn(double /*t*/) {}
 
-		// ƒV[ƒ“‘JˆÚ‚ÌƒtƒF[ƒhƒAƒEƒgˆ—
+		// ã‚·ãƒ¼ãƒ³é·ç§»æ™‚ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå‡¦ç†
 		virtual void fadeOut(double /*t*/) {}
 
-		// scene::navigate()‚É‚æ‚èƒV[ƒ“‚ª‘JˆÚ‚·‚éÛ‚ÉŒÄ‚Î‚ê‚é
+		// scene::navigate()ã«ã‚ˆã‚Šã‚·ãƒ¼ãƒ³ãŒé·ç§»ã™ã‚‹éš›ã«å‘¼ã°ã‚Œã‚‹
 		virtual void onNavigate(StringView /*from*/, StringView /*to*/) {}
 	};
 }
 
 namespace scene
 {
-	// ƒGƒ“ƒeƒBƒeƒB‚ğ‚P‚Âì¬‚µAƒV[ƒ“ƒRƒ“ƒ|[ƒlƒ“ƒgicomponents::Scenej‚ğƒAƒTƒCƒ“‚·‚é
-	// ˆø”args‚É‚æ‚èƒV[ƒ“ƒIƒuƒWƒFƒNƒgTSceneiscenes::IScenej‚ğì¬‚µƒV[ƒ“ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉƒZƒbƒg‚·‚é
-	// ˆø”sceneName‚ÍƒV[ƒ“‘JˆÚ—p‚ÌƒL[
+	// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’ï¼‘ã¤ä½œæˆã—ã€ã‚·ãƒ¼ãƒ³ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆï¼ˆcomponents::Sceneï¼‰ã‚’ã‚¢ã‚µã‚¤ãƒ³ã™ã‚‹
+	// å¼•æ•°argsã«ã‚ˆã‚Šã‚·ãƒ¼ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆTSceneï¼ˆscenes::ISceneï¼‰ã‚’ä½œæˆã—ã‚·ãƒ¼ãƒ³ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«ã‚»ãƒƒãƒˆã™ã‚‹
+	// å¼•æ•°sceneNameã¯ã‚·ãƒ¼ãƒ³é·ç§»ç”¨ã®ã‚­ãƒ¼
 	template <class TScene, class ... Args>
 	void makeScene(entt::registry& registry, StringView sceneName, Args&& ... args)
 	{
@@ -36,9 +36,9 @@ namespace scene
 			entity, std::make_shared<TScene>(registry), sceneName, std::forward<Args>(args)...);
 	}
 	
-	// ƒV[ƒ“sceneName‚Ö‚Ì‘JˆÚ‚ğŠJn‚·‚é
+	// ã‚·ãƒ¼ãƒ³sceneNameã¸ã®é·ç§»ã‚’é–‹å§‹ã™ã‚‹
 	void navigate(entt::registry& registry, StringView sceneName, const Duration& fade = 1s);
 
-	// ƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚ÌXVEƒtƒF[ƒhˆ—‚ğ‚·‚é
+	// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®æ›´æ–°ãƒ»ãƒ•ã‚§ãƒ¼ãƒ‰å‡¦ç†ã‚’ã™ã‚‹
 	void update(entt::registry& registry);
 }
